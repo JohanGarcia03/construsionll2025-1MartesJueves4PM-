@@ -9,19 +9,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class User extends Person{
-    private String user;
+    private Long userId;
     private String password;
     private String rol;
 
-    public User(String user, String password, String rol) {
-        this.user = user;
+    public User(Long user, String password, String rol) {
+        this.userId = user;
         this.password = password;
         this.rol = rol;
     }
 
-    public User(long personId, String name, int age, String user, String password, String rol) {
+    public User(long personId, String name, int age, Long user, String password, String rol) {
         super(personId, name, age);
-        this.user = user;
+        this.userId = user;
         this.password = password;
         this.rol = rol;
     }

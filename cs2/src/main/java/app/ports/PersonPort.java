@@ -1,7 +1,6 @@
 package app.ports;
 
-import app.domain.models.Person;
-
 public interface PersonPort {
-  boolean existPerson(Person person);
+  boolean PersonExist(long person);
+
 }

@@ -6,21 +6,22 @@ import app.ports.PersonPort;
 import lombok.*;
 import app.ports.UserPort;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class AdminService {
 
-    private UserPort username;
     private PersonPort personPort;
+    private UserPort usernamePort;
 
-    @SneakyThrows
-    public void RegisterVeter(Person persona) throws Exception {
-        if (PersonPort.PersonExist(persona.getPersonId())){
+    public void RegisterUser(User user) throws Exception {
+        if (personPort.PersonExist(user.getPersonId())){
             throw new Exception("Ya existe una persona con ese ID");
         }
+        if (usernamePort.existUserName(user.getUserId())) {
+            throw new Exception("Ya existe una persona con ese usuario");
+        }
 
     }
-    public void RegisterUs(User username) throws Exception {
-        if (username.existUserName((username.getUser()))) {
-            throw new Exception("Ya existe una persona con ese usuario");
-            }
-        }
-    }
+
+}
