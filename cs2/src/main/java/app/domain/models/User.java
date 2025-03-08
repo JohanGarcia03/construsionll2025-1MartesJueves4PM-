@@ -9,20 +9,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class User extends Person{
-    private Long userId;
+    private Long Username;
     private String password;
-    private String rol;
+    private Role Role;
 
-    public User(Long user, String password, String rol) {
-        this.userId = user;
+    public User(Long username, String password, app.domain.models.Role role) {
+        Username = username;
         this.password = password;
-        this.rol = rol;
+        Role = role;
     }
 
-    public User(long personId, String name, int age, Long user, String password, String rol) {
-        super(personId, name, age);
-        this.userId = user;
-        this.password = password;
-        this.rol = rol;
+    public User(long personId, String name, int age, String username, String password, Long username1, String password1, app.domain.models.Role role) {
+        super(personId, name, age, username, password);
+        Username = username1;
+        this.password = password1;
+        Role = role;
     }
 }
