@@ -26,4 +26,60 @@ public class OrderMedicine {
         this.dateGeneration = dateGeneration;
         this.voidedOrder = voidedOrder;
     }
+
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public String getDniOwner() {
+        return dniOwner;
+    }
+
+    public void setDniOwner(String dniOwner) {
+        this.dniOwner = dniOwner;
+    }
+
+    public String getDniVeterinarian() {
+        return dniVeterinarian;
+    }
+
+    public void setDniVeterinarian(String dniVeterinarian) {
+        this.dniVeterinarian = dniVeterinarian;
+    }
+
+    public String getMedications() {
+        return medications;
+    }
+
+    public void setMedications(String medications) {
+        this.medications = medications;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+
+    public Date getDateGeneration() {
+        return dateGeneration;
+    }
+
+    public void setDateGeneration(Date dateGeneration) {
+        this.dateGeneration = dateGeneration;
+    }
+
+    public boolean isVoidedOrder() {
+        return voidedOrder;
+    }
+
+    public void setVoidedOrder(boolean voidedOrder) {
+        this.voidedOrder = voidedOrder;
+    }
 }

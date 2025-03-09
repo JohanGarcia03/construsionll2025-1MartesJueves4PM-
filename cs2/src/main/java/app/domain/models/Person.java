@@ -11,18 +11,38 @@ import javax.management.relation.Role;
 @NoArgsConstructor
 public class Person {
 
-    private long PersonId;
+    private Long PersonId;
     private String Name;
     private int Age;
-    private String username;
-    private String password;
 
-    public Person(long personId, String name, int age, String username, String password) {
+    public Person(Long personId, String name, int age) {
         PersonId = personId;
         Name = name;
         Age = age;
-        this.username = username;
-        this.password = password;
+    }
+
+    public Long getPersonId() {
+        return PersonId;
+    }
+
+    public void setPersonId(Long personId) {
+        PersonId = personId;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public int getAge() {
+        return Age;
+    }
+
+    public void setAge(int age) {
+        Age = age;
     }
 }
 

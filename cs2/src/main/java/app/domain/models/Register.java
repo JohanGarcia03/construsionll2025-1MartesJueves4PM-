@@ -40,4 +40,100 @@ public class Register {
         this.detailsProcess = detailsProcess;
         this.orderAnnulled = orderAnnulled;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getUsers() {
+        return users;
+    }
+
+    public void setUsers(String users) {
+        this.users = users;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getSymptoms() {
+        return symptoms;
+    }
+
+    public void setSymptoms(String symptoms) {
+        this.symptoms = symptoms;
+    }
+
+    public String getDiagnostic() {
+        return diagnostic;
+    }
+
+    public void setDiagnostic(String diagnostic) {
+        this.diagnostic = diagnostic;
+    }
+
+    public String getProcedure() {
+        return procedure;
+    }
+
+    public void setProcedure(String procedure) {
+        this.procedure = procedure;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public List<String> getVaccine() {
+        return vaccine;
+    }
+
+    public void setVaccine(List<String> vaccine) {
+        this.vaccine = vaccine;
+    }
+
+    public List<String> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(List<String> allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getDetailsProcess() {
+        return detailsProcess;
+    }
+
+    public void setDetailsProcess(String detailsProcess) {
+        this.detailsProcess = detailsProcess;
+    }
+
+    public boolean isOrderAnnulled() {
+        return orderAnnulled;
+    }
+
+    public void setOrderAnnulled(boolean orderAnnulled) {
+        this.orderAnnulled = orderAnnulled;
+    }
 }

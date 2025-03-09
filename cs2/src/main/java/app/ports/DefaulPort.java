@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface DefaulPort {
     Optional<User> login(String username, String password);
-
-
 }
