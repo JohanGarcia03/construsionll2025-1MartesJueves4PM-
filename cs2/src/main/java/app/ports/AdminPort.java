@@ -1,10 +1,9 @@
 package app.ports;
 
-import app.domain.models.Person;
 import app.domain.models.User;
 
 import java.util.Optional;
 
-public interface DefaulPort {
+public interface AdminPort {
     Optional<User> login(String username, String password);
 }

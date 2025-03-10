@@ -1,14 +1,14 @@
 package app.domain.services;
 
 import app.domain.models.User;
-import app.ports.DefaulPort;
+import app.ports.AdminPort;
 
 import java.util.Optional;
 
-public class InmemoryDefaultAdapter implements DefaulPort {
-    private final InmemoryPersonAdapter personAdapter;
+public class InmemoryDefaultAdapter implements AdminPort {
+    private final MemoryPersonAdapter personAdapter;
 
-    public InmemoryDefaultAdapter(InmemoryPersonAdapter personAdapter) {
+    public InmemoryDefaultAdapter(MemoryPersonAdapter personAdapter) {
         this.personAdapter = personAdapter;
     }
 

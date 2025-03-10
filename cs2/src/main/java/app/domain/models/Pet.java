@@ -9,7 +9,7 @@ import app.domain.models.Species;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Pet {
+public class Pet extends PetOwner{
     private long idPet;
     private String name;
     private long dniOwner;

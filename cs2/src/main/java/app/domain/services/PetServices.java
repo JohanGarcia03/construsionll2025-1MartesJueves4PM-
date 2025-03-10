@@ -1,8 +1,8 @@
 package app.domain.services;
 
 import app.domain.models.Pet;
-import app.ports.Petport;
-import app.ports.UserPort;
+import app.ports.PersonPort;
+import app.ports.PetPort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,19 +11,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 @Getter
-@NoArgsConstructor
+
 @Setter
 public class PetServices {
-    private Petport petport;
-    private UserPort userport;
+    private PetPort petport;
+    private PersonPort personPort;
 
-    public PetServices(Petport petPort, UserPort userport) {
+    public PetServices() {
+    }
+
+    public PetServices(PetPort petPort, PersonPort personPort) {
         this.petport = petPort;
-        this.userport = userport;
+        this.personPort = personPort;
     }
 
     public void registerPet(Long idPet,String name, Long dniOwner,int AgePet, String species, String race, String color, String size, Float weight) {
-        if (userport.findById(dniOwner).isEmpty()) {
+        if (personPort.findById(dniOwner).isEmpty()) {
             throw new IllegalArgumentException("El dueño no está registrado.");
         }
 

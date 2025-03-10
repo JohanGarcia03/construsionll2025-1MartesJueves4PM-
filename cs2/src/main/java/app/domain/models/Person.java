@@ -1,24 +1,22 @@
 package app.domain.models;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.management.relation.Role;
 
 @Setter
 @Getter
-@NoArgsConstructor
 public class Person {
 
     private Long PersonId;
     private String Name;
     private int Age;
 
+    Person(){
+
+    }
     public Person(Long personId, String name, int age) {
-        PersonId = personId;
-        Name = name;
-        Age = age;
     }
 
     public Long getPersonId() {

@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface PersonPort {
   boolean PersonExist(long person);
   void savePersonport(User user);
-  void deletePersonport(Long id);
   Optional<User> findById(Long id);
-  List<User> findAllPersonport();
+  List<User> getAllUsers();
 }

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class InmemoryPersonAdapter implements UserPort {
+public class MemoryPersonAdapter implements UserPort {
 
     private final Map<Long, User> userDatabase = new HashMap<>();
 
-    public InmemoryPersonAdapter (){
+    public MemoryPersonAdapter(){
         User admin = new User(1L, "Admin", 30, "admin", "Pt3R0d4cT1l3s", Role.ADMIN);
         userDatabase.put(admin.getPersonId(), admin);
     }
