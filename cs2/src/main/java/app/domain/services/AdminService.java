@@ -1,6 +1,5 @@
 package app.domain.services;
 
-import app.domain.models.Role;
 import app.domain.models.User;
 import app.ports.PersonPort;
 import app.ports.UserPort;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class AdminService {
     private PersonPort personPort;
     private UserPort userPort;
-    private User loggedUser;
 
     public void registerUser(User user) throws Exception {
 
@@ -31,9 +29,6 @@ public class AdminService {
         if (userPort.existUserName(user.getUsername())) {
             throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
         }
-        if (!canRegisterUser(user)) {
-            throw new SecurityException("No tienes permisos para registrar este usuario.");
-        }
         userPort.save(user);
     }
 
@@ -44,10 +39,6 @@ public class AdminService {
         if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre de usuario no puede estar vacío.");
         }
-    }
-
-    private boolean canRegisterUser(User user) {
-        return loggedUser != null && loggedUser.getRole() == Role.ADMIN;
     }
 
     public Optional<User> getUserById(Long id) throws Exception {
