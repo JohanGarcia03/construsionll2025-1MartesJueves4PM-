@@ -3,15 +3,13 @@ package app.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.management.relation.Role;
-
 @Setter
 @Getter
 public class Person {
 
-    private Long PersonId;
-    private String Name;
-    private int Age;
+    private Long personId;
+    private String name;
+    private int age;
 
     Person(){
 
@@ -20,27 +18,27 @@ public class Person {
     }
 
     public Long getPersonId() {
-        return PersonId;
+        return personId;
     }
 
     public void setPersonId(Long personId) {
-        PersonId = personId;
+        this.personId = personId;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public int getAge() {
-        return Age;
+        return age;
     }
 
     public void setAge(int age) {
-        Age = age;
+        this.age = age;
     }
 }
 

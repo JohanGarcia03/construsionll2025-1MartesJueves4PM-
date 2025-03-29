@@ -1,9 +1,9 @@
 package app.ports;
 
-import app.domain.models.User;
-
-import java.util.Optional;
+import app.domain.models.Person;
 
 public interface AdminPort {
-    Optional<User> login(String username, String password);
+    boolean existPerson(long personId );
+    void savePerson (Person person);
+    Person findById(long personId);
 }
