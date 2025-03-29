@@ -7,39 +7,28 @@ import lombok.Setter;
 @Getter
 public class Person {
 
-    private Long personId;
+    private long cedula;
+    @Setter
+    @Getter
     private String name;
+    @Setter
+    @Getter
     private int age;
 
     Person(){
 
     }
-    public Person(Long personId, String name, int age) {
+    public Person(long cedula, String name, int age) {
     }
 
-    public Long getPersonId() {
-        return personId;
+    public long getCedula() {
+        return cedula;
     }
 
-    public void setPersonId(Long personId) {
-        this.personId = personId;
+    public void setCedula(long cedula) {
+        this.cedula = cedula;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 }
 
 

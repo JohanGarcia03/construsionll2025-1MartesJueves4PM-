@@ -5,38 +5,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.management.relation.Role;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class User extends Person{
-    private long userId;
+public class User extends Person {
     private String username;
     private String password;
-    private Role role;
+    private String role;
 
-    public User(long userId, String username, String password, Role role) {
-        this.userId = userId;
+
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public User(Long personId, String name, int age, long userId, String username, String password, Role role) {
+    public User(Long personId, String name, int age, String username, String password, String role) {
         super(personId, name, age);
-        this.userId = userId;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public long getUserId() {
-        return userId;
-    }
+    public User() {
 
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -55,13 +47,11 @@ public class User extends Person{
         this.password = password;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }
-
-

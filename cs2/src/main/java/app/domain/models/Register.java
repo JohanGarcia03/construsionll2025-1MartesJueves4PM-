@@ -13,6 +13,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Register {
+    @Setter
+    @Getter
     private Date date;
     private String users;
     private String reason;
@@ -20,13 +22,13 @@ public class Register {
     private String diagnostic;
     private String procedure;
     private String dose;
-    private String idOrder;
+    private long idOrder;
     private List<String> vaccine;
     private  List<String> allergies;
     private String detailsProcess;
     private boolean orderAnnulled;
 
-    public Register(Date date,String users,String reason, String symptoms, String diagnostic, String procedure, String dose, String idOrder, List<String> vaccine, List<String> allergies, String detailsProcess, boolean orderAnnulled) {
+    public Register(Date date,String users,String reason, String symptoms, String diagnostic, String procedure, String dose, long idOrder, List<String> vaccine, List<String> allergies, String detailsProcess, boolean orderAnnulled) {
         this.date = date;
         this.users = users;
         this.reason = reason;
@@ -39,14 +41,6 @@ public class Register {
         this.allergies = allergies;
         this.detailsProcess = detailsProcess;
         this.orderAnnulled = orderAnnulled;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getUsers() {
@@ -97,11 +91,11 @@ public class Register {
         this.dose = dose;
     }
 
-    public String getIdOrder() {
+    public long getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(String idOrder) {
+    public void setIdOrder(long idOrder) {
         this.idOrder = idOrder;
     }
 
