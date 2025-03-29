@@ -4,17 +4,16 @@ package app.domain.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import app.domain.models.Species;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Pet {
+public class Pet extends PetOwner{
     private long idPet;
     private String name;
     private long dniOwner;
-    private int AgePet;
-    private String Species;
+    private int agePet;
+    private String species;
     private String race;
     private String color;
     private String size;
@@ -24,8 +23,8 @@ public class Pet {
         this.idPet = idPet;
         this.name = name;
         this.dniOwner = dniOwner;
-        AgePet = agePet;
-        Species = species;
+        this.agePet = agePet;
+        this.species = species;
         this.race = race;
         this.color = color;
         this.size = size;
@@ -57,19 +56,19 @@ public class Pet {
     }
 
     public int getAgePet() {
-        return AgePet;
+        return agePet;
     }
 
     public void setAgePet(int agePet) {
-        AgePet = agePet;
+        this.agePet = agePet;
     }
 
     public String getSpecies() {
-        return Species;
+        return species;
     }
 
     public void setSpecies(String species) {
-        Species = species;
+        this.species = species;
     }
 
     public String getRace() {
