@@ -18,8 +18,8 @@ public class AdminService {
     private PersonPort personPort;
     private UserPort userPort;
 
-    public void registerUser(User user) throws Exception {
 
+    public void registerUser(User user) throws Exception {
         validateUser(user);
         Optional<User> userFound = personPort.findById(user.getCedula());
         if (userFound.isPresent()) {
@@ -28,10 +28,9 @@ public class AdminService {
         if (userPort.existUserName(user.getUsername())) {
             throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
         }
-        userPort.save(user);
         user.setRole("");
-        personPort.savePerson(user);
         userPort.save(user);
+        personPort.savePerson(user);
         personPort.personExist(user.getCedula());
     }
 
