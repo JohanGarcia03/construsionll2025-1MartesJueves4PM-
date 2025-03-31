@@ -5,20 +5,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-public class invoiceOrder {
-    private String idFacture;
-    private String idPet;
-    private String dniOwner;
-    private String idOrder;
+
+
+//Encabezado de facturas
+public class InvoiceOrder {
+    private long idFacture;
+    private long idPet;
+    private long dniOwner;
+    private long idOrder;
     private String productName;
     private float value;
     private int amount;
     private Date date;
 
-    public invoiceOrder(String idFacture, String idPet, String dniOwner, String idOrder, String productName, float value, int amount, Date date) {
+    public InvoiceOrder(long idFacture, long idPet, long dniOwner, long idOrder, String productName, float value, int amount, Date date) {
         this.idFacture = idFacture;
         this.idPet = idPet;
         this.dniOwner = dniOwner;
@@ -29,35 +32,35 @@ public class invoiceOrder {
         this.date = date;
     }
 
-    public String getIdFacture() {
+    public long getIdFacture() {
         return idFacture;
     }
 
-    public void setIdFacture(String idFacture) {
+    public void setIdFacture(long idFacture) {
         this.idFacture = idFacture;
     }
 
-    public String getIdPet() {
+    public long getIdPet() {
         return idPet;
     }
 
-    public void setIdPet(String idPet) {
+    public void setIdPet(long idPet) {
         this.idPet = idPet;
     }
 
-    public String getDniOwner() {
+    public long getDniOwner() {
         return dniOwner;
     }
 
-    public void setDniOwner(String dniOwner) {
+    public void setDniOwner(long dniOwner) {
         this.dniOwner = dniOwner;
     }
 
-    public String getIdOrder() {
+    public long getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(String idOrder) {
+    public void setIdOrder(long idOrder) {
         this.idOrder = idOrder;
     }
 

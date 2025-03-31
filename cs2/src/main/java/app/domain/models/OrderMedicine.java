@@ -9,37 +9,36 @@ import java.sql.Date;
 @NoArgsConstructor
 @Setter
 public class OrderMedicine {
-    private String idOrder;
-    private String dniOwner;
+    private long idOrder;
+    private long petId;
+    private long dniOwner;
     private String dniVeterinarian;
     private String medications;
     private String dose;
     private Date dateGeneration;
     private boolean voidedOrder;
 
-    public OrderMedicine(String idOrder, String dniOwner, String dniVeterinarian, String medications, String dose, Date dateGeneration, boolean voidedOrder) {
-        this.idOrder = idOrder;
-        this.dniOwner = dniOwner;
-        this.dniVeterinarian = dniVeterinarian;
-        this.medications = medications;
-        this.dose = dose;
-        this.dateGeneration = dateGeneration;
-        this.voidedOrder = voidedOrder;
-    }
-
-    public String getIdOrder() {
+    public long getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(String idOrder) {
+    public void setIdOrder(long idOrder) {
         this.idOrder = idOrder;
     }
 
-    public String getDniOwner() {
+    public long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(long petId) {
+        this.petId = petId;
+    }
+
+    public long getDniOwner() {
         return dniOwner;
     }
 
-    public void setDniOwner(String dniOwner) {
+    public void setDniOwner(long dniOwner) {
         this.dniOwner = dniOwner;
     }
 
@@ -81,5 +80,18 @@ public class OrderMedicine {
 
     public void setVoidedOrder(boolean voidedOrder) {
         this.voidedOrder = voidedOrder;
+    }
+
+    public OrderMedicine(long idOrder, long petId, long dniOwner, String dniVeterinarian, String medications, String dose, Date dateGeneration, boolean voidedOrder) {
+        this.idOrder = idOrder;
+        this.petId = petId;
+        this.dniOwner = dniOwner;
+        this.dniVeterinarian = dniVeterinarian;
+        this.medications = medications;
+        this.dose = dose;
+        this.dateGeneration = dateGeneration;
+        this.voidedOrder = voidedOrder;
+
+
     }
 }

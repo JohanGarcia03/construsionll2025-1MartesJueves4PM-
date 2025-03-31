@@ -2,36 +2,46 @@ package app.domain.models;
 
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-public class Pet extends PetOwner{
+
+public class Pet extends ClinicalHistory {
+
     private long idPet;
+    private long cedulaOnwer;
+    @Getter
     private String name;
-    private long dniOwner;
-    private int agePet;
-    private String species;
+    @Getter
+    private int AgePet;
+    @Getter
+    private String Species;
+    @Getter
     private String race;
+    @Getter
     private String color;
+    @Getter
     private String size;
+    @Getter
     private Float weight;
 
-    public Pet(long idPet, String name, long dniOwner, int agePet, String species, String race, String color, String size, Float weight) {
-        this.idPet = idPet;
+    public Pet(Long idPet, List<Register> registers, long idPet1, long cedulaOnwer, String name, int agePet, String species, String race, String color, String size, Float weight) {
+        super(idPet, registers);
+        this.idPet = idPet1;
+        this.cedulaOnwer = cedulaOnwer;
         this.name = name;
-        this.dniOwner = dniOwner;
-        this.agePet = agePet;
-        this.species = species;
+        AgePet = agePet;
+        Species = species;
         this.race = race;
         this.color = color;
         this.size = size;
         this.weight = weight;
     }
 
-    public long getIdPet() {
+    public long getIdPets() {
         return idPet;
     }
 
@@ -39,64 +49,36 @@ public class Pet extends PetOwner{
         this.idPet = idPet;
     }
 
-    public String getName() {
-        return name;
+    public long getCedulaOwner() {
+        return cedulaOnwer;
+    }
+
+    public void setCedulaOnwer(long cedulaOnwer) {
+        this.cedulaOnwer = cedulaOnwer;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public long getDniOwner() {
-        return dniOwner;
-    }
-
-    public void setDniOwner(long dniOwner) {
-        this.dniOwner = dniOwner;
-    }
-
-    public int getAgePet() {
-        return agePet;
-    }
-
     public void setAgePet(int agePet) {
-        this.agePet = agePet;
-    }
-
-    public String getSpecies() {
-        return species;
+        AgePet = agePet;
     }
 
     public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public String getRace() {
-        return race;
+        Species = species;
     }
 
     public void setRace(String race) {
         this.race = race;
     }
 
-    public String getColor() {
-        return color;
-    }
-
     public void setColor(String color) {
         this.color = color;
     }
 
-    public String getSize() {
-        return size;
-    }
-
     public void setSize(String size) {
         this.size = size;
-    }
-
-    public Float getWeight() {
-        return weight;
     }
 
     public void setWeight(Float weight) {
