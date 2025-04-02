@@ -65,11 +65,5 @@ public class AdminService {
     public List<User> getAllSellers() {
         return userPort.findAll();
     }
+
 }
-
-
-//// Servicios administradores, vendedores, login veterinario.
-/// Las reglas de negocio ::
-
-
-// Adminservice: que el rol que da
