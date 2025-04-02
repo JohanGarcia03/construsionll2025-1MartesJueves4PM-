@@ -11,6 +11,7 @@ import java.sql.Date;
 
 
 //Encabezado de facturas
+
 public class InvoiceOrder {
     private long idFacture;
     private long idPet;
