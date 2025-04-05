@@ -8,26 +8,32 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User extends Person {
+    private long idUser;
     private String username;
     private String password;
     private String role;
 
-
-    public User(String username, String password, String role) {
+    public User(long idUser, String username, String password, String role) {
+        this.idUser = idUser;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public User(Long personId, String name, int age, String username, String password, String role) {
-        super(personId, name, age);
+    public User(long Dni, String name, int age, long idUser, String username, String password, String role) {
+        super(Dni, name, age);
+        this.idUser = idUser;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public User() {
+    public long getIdUser() {
+        return idUser;
+    }
 
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
     public String getUsername() {

@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Pet extends ClinicalHistory {
+public class Pet {
 
     private long idPet;
     private long cedulaOnwer;
@@ -41,16 +41,4 @@ public class Pet extends ClinicalHistory {
         this.weight = weight;
     }
 
-    public Pet(Date date, String users, String reason, String symptoms, String diagnostic, String procedure, String dose, long idOrder, List<String> vaccine, List<String> allergies, String detailsProcess, boolean orderAnnulled, long idPet, long cedulaOnwer, String name, int agePet, String species, String race, String color, String size, Float weight) {
-        super(date, users, reason, symptoms, diagnostic, procedure, dose, idOrder, vaccine, allergies, detailsProcess, orderAnnulled);
-        this.idPet = idPet;
-        this.cedulaOnwer = cedulaOnwer;
-        this.name = name;
-        AgePet = agePet;
-        Species = species;
-        this.race = race;
-        this.color = color;
-        this.size = size;
-        this.weight = weight;
-    }
 }

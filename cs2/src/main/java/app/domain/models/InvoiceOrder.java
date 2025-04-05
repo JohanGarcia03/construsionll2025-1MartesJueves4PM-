@@ -12,7 +12,7 @@ import java.sql.Date;
 
 //Encabezado de facturas
 
-public class InvoiceOrder {
+public class InvoiceOrder extends Pet{
     private long idFacture;
     private long idPet;
     private long dniOwner;
@@ -22,9 +22,10 @@ public class InvoiceOrder {
     private int amount;
     private Date date;
 
-    public InvoiceOrder(long idFacture, long idPet, long dniOwner, long idOrder, String productName, float value, int amount, Date date) {
+    public InvoiceOrder(long idPet, long cedulaOnwer, String name, int agePet, String species, String race, String color, String size, Float weight, long idFacture, long idPet1, long dniOwner, long idOrder, String productName, float value, int amount, Date date) {
+        super(idPet, cedulaOnwer, name, agePet, species, race, color, size, weight);
         this.idFacture = idFacture;
-        this.idPet = idPet;
+        this.idPet = idPet1;
         this.dniOwner = dniOwner;
         this.idOrder = idOrder;
         this.productName = productName;

@@ -11,8 +11,7 @@ import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor
-public class ClinicalHistory {
+public class ClinicalHistory extends Pet{
     @Setter
     @Getter
     private Date date;
@@ -28,7 +27,8 @@ public class ClinicalHistory {
     private String detailsProcess;
     private boolean orderAnnulled;
 
-    public ClinicalHistory(Date date, String users, String reason, String symptoms, String diagnostic, String procedure, String dose, long idOrder, List<String> vaccine, List<String> allergies, String detailsProcess, boolean orderAnnulled) {
+    public ClinicalHistory(long idPet, long DniOwner, String name, int agePet, String species, String race, String color, String size, Float weight, Date date, String users, String reason, String symptoms, String diagnostic, String procedure, String dose, long idOrder, List<String> vaccine, List<String> allergies, String detailsProcess, boolean orderAnnulled) {
+        super(idPet, DniOwner, name, agePet, species, race, color, size, weight);
         this.date = date;
         this.users = users;
         this.reason = reason;
@@ -41,6 +41,14 @@ public class ClinicalHistory {
         this.allergies = allergies;
         this.detailsProcess = detailsProcess;
         this.orderAnnulled = orderAnnulled;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getUsers() {
