@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.sql.Date;
 @Getter
 @Setter
-@NoArgsConstructor
+
 
 
 //Encabezado de facturas

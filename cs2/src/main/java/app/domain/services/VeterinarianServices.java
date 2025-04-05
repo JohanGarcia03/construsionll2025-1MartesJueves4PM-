@@ -25,15 +25,9 @@ public class VeterinarianServices {
         Optional<Pet> petFound = petPort.FindByIdPet(String.valueOf(pet.getIdPet()));
         if (petFound.isEmpty()) throw new Exception("La mascota no existe");
 
-        return petFound;
-    }
-
-    // Se busca un due;o registrado con esa mascota si existe pasa si no tira esa excepcion
-    public Optional <Pet> getOwnerByPet(Pet pet)throws Exception{
         Optional <User> personByPet = personPort.findById((pet.getCedulaOnwer()));
-        if(personByPet.isEmpty()) throw new Exception("No hay una mascota registrada con esa cedula:");
-
-        return Optional.empty();
+        if(personByPet.isEmpty()) throw new Exception("No hay una persona asociada a esa mascota:");
+        return petFound;
     }
 
 }
