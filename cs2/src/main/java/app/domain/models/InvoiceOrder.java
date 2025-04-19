@@ -7,11 +7,12 @@ import lombok.Setter;
 import java.sql.Date;
 @Getter
 @Setter
-@NoArgsConstructor
+
 
 
 //Encabezado de facturas
-public class InvoiceOrder {
+
+public class InvoiceOrder{
     private long idFacture;
     private long idPet;
     private long dniOwner;
@@ -21,15 +22,7 @@ public class InvoiceOrder {
     private int amount;
     private Date date;
 
-    public InvoiceOrder(long idFacture, long idPet, long dniOwner, long idOrder, String productName, float value, int amount, Date date) {
-        this.idFacture = idFacture;
-        this.idPet = idPet;
-        this.dniOwner = dniOwner;
-        this.idOrder = idOrder;
-        this.productName = productName;
-        this.value = value;
-        this.amount = amount;
-        this.date = date;
+    public InvoiceOrder() {
     }
 
     public long getIdFacture() {

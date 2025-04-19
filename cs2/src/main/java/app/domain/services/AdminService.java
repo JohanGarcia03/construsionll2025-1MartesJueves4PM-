@@ -19,34 +19,20 @@ public class AdminService {
     private UserPort userPort;
 
 
-    public void registerUser(User user) throws Exception {
-        validateUser(user);
+    public void registerVeterinarian(User user) throws Exception {
         Optional<User> userFound = personPort.findById(user.getCedula());
         if (userFound.isPresent()) {
-            throw new Exception("Ya existe un usuario con ese ID: " + userFound.get().getCedula());
+            throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
         }
+
         if (userPort.existUserName(user.getUsername())) {
             throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
         }
-        user.setRole("");
-        userPort.save(user);
+        user.setRole("VETERINARIAN");
         personPort.savePerson(user);
-        personPort.personExist(user.getCedula());
+        userPort.save(user);
     }
-
-    private void validateUser(User user) throws IllegalArgumentException {
-        if (user.getRole() == null) {
-            throw new IllegalArgumentException("El usuario debe tener un rol asignado: VETERINARIAN o SELLER.");
-        }
-        if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre de usuario no puede estar vacío.");
-        }
-    }
-
-    public Optional<User> getUserById(long id) throws Exception {
-        if (id == 0) {
-            throw new Exception("El ID no puede ser nulo.");
-        }
+    public Optional<User> getVendorById(long id) throws Exception {
         Optional<User> user = userPort.findById(id);
         if (user.isEmpty()) {
             throw new UserPrincipalNotFoundException("No se encontró usuario con ID: " + id);
@@ -54,15 +40,31 @@ public class AdminService {
         return user;
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllVendors() {
         return userPort.findAll();
     }
 
-    public void removeUser(long id) throws Exception {
+    public void registerSeller(User user) throws Exception {
+        Optional<User> userFound = personPort.findById(user.getCedula());
+        if (userFound.isPresent()) {
+            throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
+        }
+        if (userPort.existUserName(user.getUsername())) {
+            throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
+        }
+        user.setRole("SELLER");
+        personPort.savePerson(user);
+        userPort.save(user);
+    }
+    public Optional<User> getSellerById(long id) throws Exception {
         Optional<User> user = userPort.findById(id);
         if (user.isEmpty()) {
-            throw new UserPrincipalNotFoundException("No se puede eliminar, usuario con ID " + id + " no encontrado.");
+            throw new UserPrincipalNotFoundException("No se encontró un vendedor con ese ID: " + id);
         }
-        userPort.delete(id);
+        return user;
     }
+    public List<User> getAllSellers() {
+        return userPort.findAll();
+    }
+
 }

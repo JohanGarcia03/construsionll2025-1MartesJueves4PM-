@@ -18,8 +18,7 @@ public class Person {
     Person(){
 
     }
-    public Person(long cedula, String name, int age) {
-    }
+
 
     public long getCedula() {
         return cedula;
@@ -29,6 +28,21 @@ public class Person {
         this.cedula = cedula;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
 
 
