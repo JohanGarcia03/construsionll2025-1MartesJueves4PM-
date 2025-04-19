@@ -11,9 +11,9 @@ import java.util.List;
 
 @Setter
 @Getter
-public class ClinicalHistory extends Pet{
-    @Setter
-    @Getter
+public class ClinicalHistory{
+
+    private long idPet;
     private Date date;
     private String users;
     private String reason;
@@ -27,20 +27,16 @@ public class ClinicalHistory extends Pet{
     private String detailsProcess;
     private boolean orderAnnulled;
 
-    public ClinicalHistory(long idPet, long DniOwner, String name, int agePet, String species, String race, String color, String size, Float weight, Date date, String users, String reason, String symptoms, String diagnostic, String procedure, String dose, long idOrder, List<String> vaccine, List<String> allergies, String detailsProcess, boolean orderAnnulled) {
-        super(idPet, DniOwner, name, agePet, species, race, color, size, weight);
-        this.date = date;
-        this.users = users;
-        this.reason = reason;
-        this.symptoms = symptoms;
-        this.diagnostic = diagnostic;
-        this.procedure = procedure;
-        this.dose = dose;
-        this.idOrder = idOrder;
-        this.vaccine = vaccine;
-        this.allergies = allergies;
-        this.detailsProcess = detailsProcess;
-        this.orderAnnulled = orderAnnulled;
+
+    public ClinicalHistory() {
+    }
+
+    public long getIdPet() {
+        return idPet;
+    }
+
+    public void setIdPet(long idPet) {
+        this.idPet = idPet;
     }
 
     public Date getDate() {

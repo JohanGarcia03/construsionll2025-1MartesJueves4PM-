@@ -8,7 +8,7 @@ import java.sql.Date;
 @Getter
 
 @Setter
-public class OrderMedicine extends Pet{
+public class OrderMedicine{
 
     private long idOrder;
     private long petId;
@@ -19,16 +19,7 @@ public class OrderMedicine extends Pet{
     private Date dateGeneration;
     private boolean voidedOrder;
 
-    public OrderMedicine(long idPet, long cedulaOnwer, String name, int agePet, String species, String race, String color, String size, Float weight, long idOrder, long petId, long dniOwner, long dniVeterinarian, String medications, String dose, Date dateGeneration, boolean voidedOrder) {
-        super(idPet, cedulaOnwer, name, agePet, species, race, color, size, weight);
-        this.idOrder = idOrder;
-        this.petId = petId;
-        this.dniOwner = dniOwner;
-        this.dniVeterinarian = dniVeterinarian;
-        this.medications = medications;
-        this.dose = dose;
-        this.dateGeneration = dateGeneration;
-        this.voidedOrder = voidedOrder;
+    public OrderMedicine() {
     }
 
     public long getIdOrder() {

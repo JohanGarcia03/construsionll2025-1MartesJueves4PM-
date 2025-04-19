@@ -16,7 +16,4 @@ public interface ClinicalHistoryPort {
 
     // Ordenes médicas
     void markOrderAsAnnulled(long orderId, String reason);
-
-    // Validación
-    boolean isValidVeterinarianForPet(String dniVeterinarian, Long petId);
 }

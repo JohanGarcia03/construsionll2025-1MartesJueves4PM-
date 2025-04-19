@@ -24,6 +24,7 @@ public class AdminService {
         if (userFound.isPresent()) {
             throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
         }
+
         if (userPort.existUserName(user.getUsername())) {
             throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
         }

@@ -4,16 +4,13 @@ package app.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
-import java.util.List;
-
 @Getter
 @Setter
 
 public class Pet {
 
     private long idPet;
-    private long cedulaOnwer;
+    private long IdOwner;
     @Getter
     private String name;
     @Getter
@@ -29,9 +26,9 @@ public class Pet {
     @Getter
     private Float weight;
 
-    public Pet(long idPet, long cedulaOnwer, String name, int agePet, String species, String race, String color, String size, Float weight) {
+    public Pet(long idPet, long IdOwner, String name, int agePet, String species, String race, String color, String size, Float weight) {
         this.idPet = idPet;
-        this.cedulaOnwer = cedulaOnwer;
+        this.IdOwner = IdOwner;
         this.name = name;
         AgePet = agePet;
         Species = species;
