@@ -2,49 +2,50 @@ package app.domain.services;
 
 import app.domain.models.*;
 import app.ports.*;
-import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import app.domain.models.User;
-
 import java.util.Optional;
-@NoArgsConstructor
+import app.domain.models.ClinicalHistory;
 
 public class VeterinarianServices {
-    private  MedicineOrderPort medicineOrdersPort;
-    private  PetPort petPort;
-    private  PersonPort personPort;
+    private final ClinicalHistoryPort clinicalHistoryPort;
+    private final MedicineOrderPort medicineOrderPort;
+    private final PetPort petPort;
+    private final UserPort userPort;
 
-
-    /// que si trae orden que si exista la orde
-    /// El veterinario que si sea veterinario
-
-
-    public Optional<Pet> registerClinicalHistory(ClinicalHistory clinicalHistory) throws Exception {
-        // 1. Verificar si la mascota existe
-        Optional<Pet> petFound = petPort.FindByIdPet(clinicalHistory.getIdPet());
-        if (petFound.isEmpty()) {
-            throw new Exception("La mascota no existe");
-        }
-
-        // 2. Verificar si el dueño de la mascota existe
-        Optional<User> personByPet = personPort.findById(petFound.get().getIdOwner());
-        if (personByPet.isEmpty()) {
-            throw new Exception("No hay una persona asociada a esa mascota");
-        }
-
-        // 3. Verificar si la orden médica existe
-        Optional<OrderMedicine> petFindByOrder = medicineOrdersPort.findOrderById(clinicalHistory.getIdOrder());
-        if (petFindByOrder.isEmpty()) {
-            throw new Exception("La orden médica con ese ID no existe");
-        }
-
-        // 4. Guardar la historia clínica
-        medicineOrdersPort.createMedicineOrder(petFound.get().getIdPet(), clinicalHistory);
-
-        // 5. Confirmar con retorno de la mascota
-        return petFound;
+    // Inyección de dependencias
+    public VeterinarianServices(ClinicalHistoryPort clinicalHistoryPort, MedicineOrderPort medicineOrderPort, PetPort petPort, UserPort userPort) {
+        this.clinicalHistoryPort = clinicalHistoryPort;
+        this.medicineOrderPort = medicineOrderPort;
+        this.petPort = petPort;
+        this.userPort = userPort;
     }
 
+    public ClinicalHistory registerClinicalHistory(long veterinarianId, ClinicalHistory history) throws Exception {
+        // Validar veterinario
+        User vet = userPort.findById(veterinarianId)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
+        if (!vet.isVeterinarian()) {
+            throw new Exception("Solo veterinarios pueden registrar historias clínicas");
+        }
+
+        //Validar mascota
+        Pet pet = petPort.FindByIdPet(history.getIdPet())
+                .orElseThrow(() -> new Exception("Mascota no encontrada"));
+
+        //Si hay orden médica, validarla
+        if (history.getIdOrder() != 0) {
+            medicineOrderPort.findOrderById(history.getIdOrder())
+                    .orElseThrow(() -> new Exception("Orden médica no válida"));
+        }
+
+        //Completar datos
+        history.setUsers(vet.getName());
+        history.setDate(new java.sql.Date(System.currentTimeMillis()));
+        return clinicalHistoryPort.save(history);
+    }
+
+    public OrderMedicine createMedicalOrder(long veterinarianId, OrderMedicine order) throws Exception {
+        return medicineOrderPort.save(order);
+
+    }
 }
-

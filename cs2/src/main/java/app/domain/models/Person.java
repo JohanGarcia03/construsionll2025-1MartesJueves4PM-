@@ -19,7 +19,6 @@ public class Person {
 
     }
 
-
     public long getCedula() {
         return cedula;
     }

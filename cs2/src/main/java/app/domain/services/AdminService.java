@@ -1,5 +1,6 @@
 package app.domain.services;
 
+import app.domain.models.Person;
 import app.domain.models.User;
 import app.ports.PersonPort;
 import app.ports.UserPort;
@@ -63,6 +64,16 @@ public class AdminService {
         }
         return user;
     }
+    public void registerOwner(User user) throws Exception {
+        Optional<User> userFound = personPort.findById(user.getCedula());
+        if (userFound.isPresent()) {
+            throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
+        }
+        user.setRole("OWNER");
+        personPort.savePerson(user);
+        userPort.save(user);
+    }
+
     public List<User> getAllSellers() {
         return userPort.findAll();
     }
