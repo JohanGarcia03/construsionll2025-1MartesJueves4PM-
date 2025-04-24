@@ -134,4 +134,8 @@ public class ClinicalHistory{
     public void setOrderAnnulled(boolean orderAnnulled) {
         this.orderAnnulled = orderAnnulled;
     }
+
+    public List<String> getMedications() {
+        return List.of();
+    }
 }

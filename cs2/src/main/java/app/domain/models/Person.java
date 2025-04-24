@@ -15,7 +15,7 @@ public class Person {
     @Getter
     private int age;
 
-    Person(){
+    public Person(){
 
     }
 

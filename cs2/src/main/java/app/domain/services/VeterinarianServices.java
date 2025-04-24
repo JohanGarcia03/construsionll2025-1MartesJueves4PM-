@@ -11,7 +11,7 @@ public class VeterinarianServices {
     private final PetPort petPort;
     private final UserPort userPort;
 
-    // Inyección de dependencias
+    // dependencias
     public VeterinarianServices(ClinicalHistoryPort clinicalHistoryPort, MedicineOrderPort medicineOrderPort, PetPort petPort, UserPort userPort) {
         this.clinicalHistoryPort = clinicalHistoryPort;
         this.medicineOrderPort = medicineOrderPort;

@@ -20,11 +20,7 @@ public class User extends Person {
         this.role = role;
     }
 
-    public User(long Dni, String name, int age, long idUser, String username, String password, String role) {
-        this.idUser = idUser;
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    public User() {
     }
 
     public long getIdUser() {
