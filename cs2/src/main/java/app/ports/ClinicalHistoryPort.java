@@ -5,15 +5,10 @@ import app.domain.models.ClinicalHistory;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface ClinicalHistoryPort {
-    // Registro médico
-    ClinicalHistory registerMedicalRecord(ClinicalHistory record);
-
-    // Consultas
-    Map<Date, ClinicalHistory> getFullHistoryByPet(Long petId);
-    ClinicalHistory getRecordByDate(Long petId, Date date);
-
-    // Ordenes médicas
-    void markOrderAsAnnulled(long orderId, String reason);
+    ClinicalHistory save(ClinicalHistory history);
+    Optional<ClinicalHistory> findById(long id);
+    List<ClinicalHistory> findByPetId(long petId);
 }

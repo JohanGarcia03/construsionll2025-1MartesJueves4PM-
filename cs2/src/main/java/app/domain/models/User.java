@@ -20,12 +20,7 @@ public class User extends Person {
         this.role = role;
     }
 
-    public User(long Dni, String name, int age, long idUser, String username, String password, String role) {
-        super(Dni, name, age);
-        this.idUser = idUser;
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    public User() {
     }
 
     public long getIdUser() {
@@ -58,5 +53,12 @@ public class User extends Person {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public boolean isVeterinarian() {
+        return "VETERINARIAN".equals(role);
+    }
+
+    public boolean isSeller() {
+        return "SELLER".equals(role);
     }
 }

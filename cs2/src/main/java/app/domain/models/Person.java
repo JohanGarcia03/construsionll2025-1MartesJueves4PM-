@@ -15,10 +15,9 @@ public class Person {
     @Getter
     private int age;
 
-    Person(){
+    public Person(){
 
     }
-
 
     public long getCedula() {
         return cedula;
