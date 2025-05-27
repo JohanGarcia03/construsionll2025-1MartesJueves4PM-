@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<start-class>app.Cs2bApplication</start-class>
+		<start-class>app.Cs2Application</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -93,7 +93,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<mainClass>app.cs2Application</mainClass>
+							<start-class>app.Cs2bApplication</start-class>
 						</configuration>
 					</execution>
 				</executions>

@@ -7,75 +7,86 @@ import app.ports.UserPort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Service
 public class AdminService {
     private PersonPort personPort;
     private UserPort userPort;
 
+    @Autowired
+    public AdminService(PersonPort personPort, UserPort userPort) {
+        this.personPort = personPort;
+        this.userPort = userPort;
+    }
 
     public void registerVeterinarian(User user) throws Exception {
-        Optional<User> userFound = personPort.findById(user.getCedula());
-        if (userFound.isPresent()) {
-            throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
+        // Validar existencia por cédula
+        if (personPort.existsByCedula(user.getCedula())) {
+            throw new Exception("Ya existe una persona con cédula: " + user.getCedula());
         }
 
+        // Validar username
         if (userPort.existUserName(user.getUsername())) {
             throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
         }
-        user.setRole("VETERINARIAN");
-        personPort.savePerson(user);
-        userPort.save(user);
-    }
-    public Optional<User> getVendorById(long id) throws Exception {
-        Optional<User> user = userPort.findById(id);
-        if (user.isEmpty()) {
-            throw new UserPrincipalNotFoundException("No se encontró usuario con ID: " + id);
-        }
-        return user;
-    }
 
-    public List<User> getAllVendors() {
-        return userPort.findAll();
+        // 1️⃣ Crear y guardar persona primero
+        Person persona = new Person();
+        persona.setCedula(user.getCedula());
+        persona.setName(user.getName());
+        persona.setAge(user.getAge());
+
+        personPort.savePerson(persona);
+
+        // 2️⃣ Volver a obtener la persona para asegurar que esté en BD
+        Person savePerson = personPort.findByCedula(user.getCedula())
+                .orElseThrow(() -> new Exception("Error al recuperar persona guardada."));
+        user.setPerson(savePerson);
+
+
+        // 3️⃣ Asociar la persona al usuario y rol
+        user.setPerson(savePerson);
+        user.setRole("veterinario");
+
+        // 4️⃣ Guardar usuario ya enlazado
+        userPort.save(user);
     }
 
     public void registerSeller(User user) throws Exception {
-        Optional<User> userFound = personPort.findById(user.getCedula());
-        if (userFound.isPresent()) {
-            throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
+        // Verificar cédula existente
+        if (personPort.existsByCedula(user.getCedula())) {
+            throw new Exception("Ya existe una persona con cédula: " + user.getCedula());
         }
+
+        // Verificar si el username ya existe
         if (userPort.existUserName(user.getUsername())) {
             throw new Exception("El nombre de usuario '" + user.getUsername() + "' ya está en uso.");
         }
-        user.setRole("SELLER");
-        personPort.savePerson(user);
-        userPort.save(user);
-    }
-    public Optional<User> getSellerById(long id) throws Exception {
-        Optional<User> user = userPort.findById(id);
-        if (user.isEmpty()) {
-            throw new UserPrincipalNotFoundException("No se encontró un vendedor con ese ID: " + id);
-        }
-        return user;
-    }
-    public void registerOwner(User user) throws Exception {
-        Optional<User> userFound = personPort.findById(user.getCedula());
-        if (userFound.isPresent()) {
-            throw new Exception("Ya existe un usuario con esa Cedula: " + userFound.get().getCedula());
-        }
-        user.setRole("OWNER");
-        personPort.savePerson(user);
+
+        // Crear y guardar la persona primero
+        Person persona = new Person();
+        persona.setCedula(user.getCedula());
+        persona.setName(user.getName());
+        persona.setAge(user.getAge());
+
+        personPort.savePerson(persona);
+
+        // Recuperar la persona para asociarla al usuario
+        Person personaGuardada = personPort.findByCedula(user.getCedula())
+                .orElseThrow(() -> new Exception("Error al recuperar persona guardada."));
+
+        // Configurar y guardar el usuario
+        user.setPerson(personaGuardada);
+        user.setRole("vendedor");
+
         userPort.save(user);
     }
 
-    public List<User> getAllSellers() {
-        return userPort.findAll();
-    }
+
 
 }

@@ -1,5 +1,6 @@
 package app.adapters.users;
 
+import app.adapters.persons.entity.PersonEntity;
 import app.adapters.users.entity.UserEntity;
 import app.adapters.users.repository.UserRepository;
 import app.domain.models.User;
@@ -22,10 +23,17 @@ public class UserAdapter implements UserPort {
         return userRepository.existsByUserName(username);
     }
 
+
     @Override
     public void save(User user) {
         UserEntity entity = convertToEntity(user);
         userRepository.save(entity);
+    }
+
+    @Override
+    public Optional<User> findByCedula(Long cedula) {
+        return userRepository.findByCedula(cedula)
+                .map(this::convertToDomain);
     }
 
     @Override
@@ -42,24 +50,35 @@ public class UserAdapter implements UserPort {
     }
 
     @Override
-    public User findByUserName(User user) {
-        UserEntity entity = userRepository.findByUserName(user.getUsername());
-        return entity != null ? convertToDomain(entity) : null;
+    public Optional<UserEntity> findByUsername(String userName) {
+        return userRepository.findByUserName(userName);
     }
 
     // Métodos de conversión
     private UserEntity convertToEntity(User user) {
         UserEntity entity = new UserEntity();
-        entity.setUserId(user.getIdUser());
+        if (user.getIdUser() != 0) {
+            entity.setId(user.getIdUser());
+        }
         entity.setUserName(user.getUsername());
         entity.setPassword(user.getPassword());
         entity.setRole(user.getRole());
+
+        if (user.getPerson() != null) {
+            PersonEntity personEntity = new PersonEntity();
+            personEntity.setCedula(user.getPerson().getCedula());
+            personEntity.setName(user.getPerson().getName());
+            personEntity.setAge(user.getPerson().getAge());
+            entity.setPerson(personEntity);
+        }
+
         return entity;
     }
 
+
     private User convertToDomain(UserEntity entity) {
         User user = new User();
-        user.setIdUser(entity.getUserId());
+        user.setIdUser(entity.getId());
         user.setUsername(entity.getUserName());
         user.setPassword(entity.getPassword());
         user.setRole(entity.getRole());

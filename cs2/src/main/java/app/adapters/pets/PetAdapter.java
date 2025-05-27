@@ -12,9 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+
 @Transactional
-public class PetAdapter implements PetPort {
+@Service
+public  class PetAdapter implements PetPort {
 
     private final PetRepository petRepository;
 
@@ -44,18 +45,22 @@ public class PetAdapter implements PetPort {
     }
 
     @Override
-    public Optional<Pet> FindByIdPet(long id) {
+    public Optional<Pet> FindByIdPet(Long id) {
         return petRepository.findById(id)
                 .map(this::convertToDomain);
     }
 
+
     // Nuevos métodos adicionales
-    public List<Pet> findByOwner(long ownerId) {
-        return petRepository.findByOwnerId(ownerId)
+    @Override
+    public List<Pet> FindByIdOwner(long idOwner) {
+        return petRepository.findByIdOwner(idOwner)
                 .stream()
                 .map(this::convertToDomain)
                 .collect(Collectors.toList());
     }
+
+
 
     public List<Pet> findBySpecies(String species) {
         return petRepository.findBySpeciesIgnoreCase(species)
@@ -103,4 +108,5 @@ public class PetAdapter implements PetPort {
                 entity.getWeight()
         );
     }
+
 }

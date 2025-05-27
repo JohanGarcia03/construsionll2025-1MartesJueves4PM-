@@ -2,7 +2,11 @@ package app.domain.services;
 
 import app.domain.models.*;
 import app.ports.*;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class SellerService {
     private final InvoiceOrderPort invoicePort;
     private final MedicineOrderPort medicineOrderPort;
@@ -15,7 +19,7 @@ public class SellerService {
     }
 
     public InvoiceOrder processSale(long sellerId, InvoiceOrder invoice) throws Exception {
-        User seller = userPort.findById(sellerId)
+        User seller = userPort.findByCedula(sellerId)
                 .orElseThrow(() -> new Exception("Vendedor no encontrado"));
 
         if (!seller.isSeller()) {
@@ -24,16 +28,22 @@ public class SellerService {
 
         // Validar órdenes médicas si es medicamento
         if (invoice.getIdOrder() != 0) {
-            OrderMedicine order = medicineOrderPort.findOrderById(invoice.getIdOrder())
+            OrderMedicine order = medicineOrderPort.findOrderById(Long.parseLong(String.valueOf(invoice.getIdOrder())))
                     .orElseThrow(() -> new Exception("Orden médica requerida no encontrada"));
 
-            if (order.isVoidedOrder()) {
+            if (order.isCancelled()) {
                 throw new Exception("La orden médica está anulada");
             }
         }
 
         invoice.setDate(new java.sql.Date(System.currentTimeMillis()));
         return invoicePort.save(invoice);
+    }
+    public List<OrderMedicine> getAllMedicalOrders(User seller) throws Exception {
+        if (!seller.isSeller()) {
+            throw new Exception("🔒 Acceso restringido solo a vendedores.");
+        }
+        return medicineOrderPort.findAllOrders();
     }
 
 }

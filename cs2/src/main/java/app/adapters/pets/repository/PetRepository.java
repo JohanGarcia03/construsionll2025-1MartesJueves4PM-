@@ -16,7 +16,7 @@ public interface PetRepository extends JpaRepository<PetEntity, Long> {
     Optional<PetEntity> findById(Long id);
 
     // Métodos adicionales
-    List<PetEntity> findByOwnerId(Long ownerId);
+    List<PetEntity> findByIdOwner(Long idOwner);
 
     @Query("SELECT p FROM PetEntity p WHERE LOWER(p.species) = LOWER(:species)")
     List<PetEntity> findBySpeciesIgnoreCase(String species);
