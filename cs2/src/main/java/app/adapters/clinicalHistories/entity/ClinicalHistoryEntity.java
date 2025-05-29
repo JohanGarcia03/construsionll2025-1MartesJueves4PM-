@@ -1,120 +1,68 @@
 package app.adapters.clinicalHistories.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "clinical_history")
 public class ClinicalHistoryEntity {
+
+    @Column(name = "procedure_type") // nombre válido
+    private String procedureType;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "pet_id")
+
+    @Column(name = "pet_id", nullable = false)
     private Long petId;
 
-    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @Column(name = "veterinarian_id")
+    @Column(name = "veterinarian_id", nullable = false)
     private Long veterinarianId;
 
-    @Column(name = "diagnostic", length = 1000)
+    private String reason;
+
+    private String symptoms;
+
+    @Column(length = 1000)
     private String diagnostic;
 
+    private String medication;
+
+    private String dosage;
+
+    @Column(name = "order_id", unique = true)
+    private String orderId;
+
     @ElementCollection
-    @CollectionTable(name = "clinical_history_medications", joinColumns = @JoinColumn(name = "history_id"))
-    @Column(name = "medication")
-    private List<String> medications;
+    @CollectionTable(name = "clinical_history_vaccinations", joinColumns = @JoinColumn(name = "history_id"))
+    @Column(name = "vaccine")
+    private List<String> vaccinations;
 
-    public String getReason() {
-        return this.getReason();
-    }
+    @ElementCollection
+    @CollectionTable(name = "clinical_history_allergies", joinColumns = @JoinColumn(name = "history_id"))
+    @Column(name = "allergy")
+    private List<String> allergyMedications;
 
-    public List<String> getAllergies() {
-        return this.getAllergies();
-    }
+    @ManyToOne
+    @JoinColumn(name = "history_id", referencedColumnName = "id")
+    private ClinicalHistoryEntity clinicalHistory;
 
-    public String getDetails() {
-        return this.getDetails();
-    }
+    @Column(length = 1000)
+    private String procedureDetails;
 
-    public boolean isOrderAnnulled() {
-        return this.isOrderAnnulled();
-    }
-
-    public Long getOrderId() {
-        return this.getOrderId();
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPetId(Long petId) {
-        this.petId = petId;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setVeterinarianId(Long veterinarianId) {
-        this.veterinarianId = veterinarianId;
-    }
-
-    public void setDiagnostic(String diagnostic) {
-        this.diagnostic = diagnostic;
-    }
-
-    public void setMedications(List<String> medications) {
-        this.medications = medications;
-    }
+    private boolean orderAnnulled;
 
 
-    public void setReason(String reason) {
-        this.getReason();
-    }
-
-    public void setSymptoms(String symptoms) {
-        this.setSymptoms("");
-    }
-
-    public void setProcedure(String procedure) {
-        this.setProcedure("");
-    }
-
-    public long getPetId() {
-        this.getPetId();
-        return 0;
-    }
-
-    public java.sql.Date getDate() {
-        return this.getDate();
-    }
-
-    public String getVeterinarianId() {
-        return this.getVeterinarianId();
-    }
-
-    public String getSymptoms() {
-        return this.getSymptoms();
-    }
-
-    public String getDiagnostic() {
-        return this.getDiagnostic();
-    }
-
-    public String getProcedure() {
-        return this.getProcedure();
-    }
-
-    public String getDose() {
-        return this.getDose();
-    }
-
-    public List<String> getVaccines() {
-        return this.getVaccines();
-    }
 }

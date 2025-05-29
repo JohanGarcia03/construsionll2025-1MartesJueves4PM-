@@ -12,5 +12,6 @@ public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
     boolean existsByCedula(long cedula);
 
     // Para la relación con User
-    Optional<PersonEntity> findByUser_Id(Long userId);
+    Optional<PersonEntity> findByUser_Id(Long id);
+
 }

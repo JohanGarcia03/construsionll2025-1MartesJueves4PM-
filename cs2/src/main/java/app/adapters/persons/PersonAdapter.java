@@ -9,7 +9,9 @@ import app.ports.PersonPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonAdapter implements PersonPort {
@@ -51,6 +53,13 @@ public class PersonAdapter implements PersonPort {
     @Override
     public Optional<User> findById(long id) {
         return userAdapter.findById(id); // Delegamos al UserAdapter
+    }
+
+    @Override
+    public List<Person> getAll() {
+        return personRepository.findAll().stream()
+                .map(this::convertToDomain)
+                .collect(Collectors.toList());
     }
 
     // Métodos de conversión

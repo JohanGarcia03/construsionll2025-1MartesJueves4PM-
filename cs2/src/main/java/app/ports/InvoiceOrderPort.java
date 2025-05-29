@@ -9,5 +9,6 @@ public interface InvoiceOrderPort {
     Optional<InvoiceOrder> findById(long id);
     List<InvoiceOrder> findByPetId(long petId);
     List<InvoiceOrder> findByOrderId(long orderId);
+
     List<InvoiceOrder> findAll();
 }

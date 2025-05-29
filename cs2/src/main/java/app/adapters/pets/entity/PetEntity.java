@@ -4,9 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "pets")
-@Getter @Setter
 public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,75 +38,4 @@ public class PetEntity {
     @Column(name = "weight")
     private Float weight;
 
-    public long getIdPet() {
-        return idPet;
-    }
-
-    public void setIdPet(long idPet) {
-        this.idPet = idPet;
-    }
-
-    public long getIdOwner() {
-        return idOwner;
-    }
-
-    public void setIdOwner(long idOwner) {
-        this.idOwner = idOwner;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAgePet() {
-        return agePet;
-    }
-
-    public void setAgePet(int agePet) {
-        this.agePet = agePet;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public String getRace() {
-        return race;
-    }
-
-    public void setRace(String race) {
-        this.race = race;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
 }

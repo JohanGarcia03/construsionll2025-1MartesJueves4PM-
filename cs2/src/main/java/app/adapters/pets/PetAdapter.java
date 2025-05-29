@@ -1,8 +1,9 @@
 package app.adapters.pets;
-
 import app.adapters.pets.entity.PetEntity;
 import app.adapters.pets.repository.PetRepository;
+import app.domain.exceptions.NotFoundException;
 import app.domain.models.Pet;
+import app.ports.PersonPort;
 import app.ports.PetPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-@Transactional
-public class PetAdapter implements PetPort {
 
+@Transactional
+@Service
+public  class PetAdapter implements PetPort {
+
+    private final PersonPort personPort;
     private final PetRepository petRepository;
 
     @Autowired
-    public PetAdapter(PetRepository petRepository) {
+    public PetAdapter(PersonPort personPort, PetRepository petRepository) {
+        this.personPort = personPort;
+
         this.petRepository = petRepository;
     }
 
@@ -28,12 +33,15 @@ public class PetAdapter implements PetPort {
         try {
             validatePet(pet);
             PetEntity entity = convertToEntity(pet);
-            petRepository.save(entity);
-            pet.setIdPet(entity.getIdPet()); // Actualizar ID generado
+            PetEntity saved = petRepository.save(entity);
+            pet.setIdPet(saved.getIdPet());
+        } catch (NotFoundException e) {
+            throw e;
         } catch (Exception e) {
-            throw new Exception("Error al guardar mascota: " + e.getMessage(), e);
+            throw new NotFoundException("❌ Error al guardar mascota: " + e.getMessage());
         }
     }
+
 
     @Override
     public List<Pet> PetAll() {
@@ -44,18 +52,20 @@ public class PetAdapter implements PetPort {
     }
 
     @Override
-    public Optional<Pet> FindByIdPet(long id) {
+    public Optional<Pet> FindByIdPet(Long id) {
         return petRepository.findById(id)
                 .map(this::convertToDomain);
     }
 
-    // Nuevos métodos adicionales
-    public List<Pet> findByOwner(long ownerId) {
-        return petRepository.findByOwnerId(ownerId)
+    @Override
+    public List<Pet> FindByIdOwner(long idOwner) {
+        return petRepository.findByIdOwner(idOwner)
                 .stream()
                 .map(this::convertToDomain)
                 .collect(Collectors.toList());
     }
+
+
 
     public List<Pet> findBySpecies(String species) {
         return petRepository.findBySpeciesIgnoreCase(species)
@@ -64,15 +74,21 @@ public class PetAdapter implements PetPort {
                 .collect(Collectors.toList());
     }
 
-    private void validatePet(Pet pet) throws Exception {
+    private void validatePet(Pet pet ) throws NotFoundException {
         if (pet.getName() == null || pet.getName().trim().isEmpty()) {
-            throw new Exception("El nombre de la mascota es requerido");
+            throw new NotFoundException("❌ El nombre de la mascota es obligatorio.");
         }
-        if (pet.getSpecies() == null || pet.getSpecies().trim().isEmpty()) {
-            throw new Exception("La especie de la mascota es requerida");
+        if (pet.getSpecies().isEmpty()) {
+            throw new NotFoundException("❌ La especie de la mascota es obligatoria.");
         }
-        if (pet.getIdOwner() <= 0) {
-            throw new Exception("Debe especificar un dueño válido");
+        if (!personPort.existsByCedula(pet.getIdOwner())) {
+            throw new NotFoundException("❌ No existe un dueño registrado con cédula: " + pet.getIdOwner());
+        }
+        if (pet.getAgePet() <= 0) {
+            throw new NotFoundException("❌ La edad de la mascota debe ser mayor que 0.");
+        }
+        if (pet.getWeight() <= 0){
+            throw new NotFoundException(("❌ El peso de la mascota debe ser mayor a cero."));
         }
     }
 
@@ -103,4 +119,5 @@ public class PetAdapter implements PetPort {
                 entity.getWeight()
         );
     }
+
 }
