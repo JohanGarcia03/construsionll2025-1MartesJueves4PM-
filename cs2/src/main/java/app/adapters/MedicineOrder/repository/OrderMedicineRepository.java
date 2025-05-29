@@ -1,7 +1,6 @@
 package app.adapters.MedicineOrder.repository;
 
 import app.adapters.MedicineOrder.entity.OrderMedicineEntity;
-import app.domain.models.OrderMedicine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

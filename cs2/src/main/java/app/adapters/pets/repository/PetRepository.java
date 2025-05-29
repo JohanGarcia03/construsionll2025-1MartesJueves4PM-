@@ -11,18 +11,9 @@ import java.util.Optional;
 @Repository
 public interface PetRepository extends JpaRepository<PetEntity, Long> {
 
-    // Métodos básicos
     List<PetEntity> findAll();
     Optional<PetEntity> findById(Long id);
-
-    // Métodos adicionales
     List<PetEntity> findByIdOwner(Long idOwner);
-
     @Query("SELECT p FROM PetEntity p WHERE LOWER(p.species) = LOWER(:species)")
     List<PetEntity> findBySpeciesIgnoreCase(String species);
-
-    List<PetEntity> findByRaceContainingIgnoreCase(String race);
-
-    @Query("SELECT p FROM PetEntity p WHERE p.agePet BETWEEN :minAge AND :maxAge")
-    List<PetEntity> findByAgeRange(int minAge, int maxAge);
 }

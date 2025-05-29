@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class Person {
 
-    private long Cedula;
+    private long cedula;
     private String name;
     private int age;
 

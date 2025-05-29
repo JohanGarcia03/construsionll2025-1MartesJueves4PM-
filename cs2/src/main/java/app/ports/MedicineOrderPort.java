@@ -1,17 +1,17 @@
 package app.ports;
 
-import app.domain.models.OrderMedicine;
+import app.domain.models.MedicineOrder;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface MedicineOrderPort {
-    OrderMedicine save(OrderMedicine order);
+    MedicineOrder save(MedicineOrder order);
 
-    Optional<OrderMedicine> findOrderById(long idOrder); // 👈 aquí
+    Optional<MedicineOrder> findOrderById(long idOrder); // 👈 aquí
 
-    OrderMedicine update(OrderMedicine order);
-    List<OrderMedicine> findAllOrders();
+    MedicineOrder update(MedicineOrder order);
+    List<MedicineOrder> findAllOrders();
 
-    Optional<OrderMedicine> findOrderById(String idOrder);
+    Optional<MedicineOrder> findOrderById(String idOrder);
 }

@@ -16,8 +16,6 @@ public class OrderMedicineEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long orderId;
-
-    // Agrega los demás atributos que necesites:
     private Long petId;
     private Long dniOwner;
     private String medications;

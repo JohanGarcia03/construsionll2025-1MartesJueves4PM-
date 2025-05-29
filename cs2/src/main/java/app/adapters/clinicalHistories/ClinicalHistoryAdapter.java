@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Repository
 public class ClinicalHistoryAdapter implements ClinicalHistoryPort {
@@ -58,7 +58,7 @@ public class ClinicalHistoryAdapter implements ClinicalHistoryPort {
     private ClinicalHistoryEntity convertToEntity(ClinicalHistory domain) {
         ClinicalHistoryEntity entity = new ClinicalHistoryEntity();
         entity.setDate(domain.getDate());
-        entity.setVeterinarianId(Long.parseLong(domain.getUsers())); // Ajusta si el ID viene como texto
+        entity.setVeterinarianId(Long.parseLong(domain.getUsers()));
         entity.setPetId(domain.getIdPet());
         entity.setReason(domain.getReason());
         entity.setSymptoms(domain.getSymptoms());

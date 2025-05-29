@@ -2,7 +2,9 @@ package app.domain.services;
 
 import app.adapters.clinicalHistories.entity.ClinicalHistoryEntity;
 import app.adapters.MedicineOrder.entity.OrderMedicineEntity;
-import app.domain.models.OrderMedicine;
+import app.domain.exceptions.BusinessException;
+import app.domain.exceptions.NotFoundException;
+import app.domain.models.MedicineOrder;
 import app.domain.models.Pet;
 import app.domain.models.User;
 import app.ports.ClinicalHistoryPort;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static app.domain.utils.RoleValidator.validateRole;
@@ -38,64 +41,57 @@ public class VeterinarianServices {
         validateRole(veterinarian, "veterinario");
 
         Pet pet = petPort.FindByIdPet(entity.getPetId())
-                .orElseThrow(() -> new Exception("🐾 Mascota no encontrada con ID: " + entity.getPetId()));
+                .orElseThrow(() -> new NotFoundException("🐾 Mascota no encontrada con ID: " + entity.getPetId()));
 
         String species = pet.getSpecies().toLowerCase();
 
-        // Validar vacunas ANTES de guardar
         if (entity.getVaccinations() != null && !entity.getVaccinations().isEmpty()) {
             if (!species.equals("perro") && !species.equals("gato")) {
-                throw new Exception("❌ Solo perros y gatos pueden registrar historial de vacunación.");
+                throw new BusinessException("❌ Solo perros y gatos pueden registrar historial de vacunación.");
             }
         }
 
-        // Validar orden médica si existe
         if (entity.getOrderId() != null && !entity.getOrderId().isBlank()) {
             long parsedId = Long.parseLong(entity.getOrderId());
             medicineOrderPort.findOrderById(parsedId)
-                    .orElseThrow(() -> new Exception("❌ Orden médica con ID " + parsedId + " no existe."));
+                    .orElseThrow(() -> new NotFoundException("❌ Orden médica con ID " + parsedId + " no existe."));
         }
 
-        // Set campos base
         entity.setVeterinarianId(veterinarian.getCedula());
         entity.setDate(new java.util.Date());
         entity.setOrderAnnulled(false);
 
         clinicalHistoryPort.save(entity);
 
-        // Guardar vacunaciones
         if (entity.getVaccinations() != null) {
             for (String vacuna : entity.getVaccinations()) {
                 clinicalHistoryPort.saveVaccination(entity.getId(), vacuna);
             }
         }
 
-        // Guardar alergias
         if (entity.getAllergyMedications() != null) {
             for (String alergia : entity.getAllergyMedications()) {
                 clinicalHistoryPort.saveAllergy(entity.getId(), alergia);
             }
         }
 
-        return "✅ Historia clínica registrada con éxito (validación aplicada)";
+        return "✅ Historia clínica registrada con éxito ";
     }
 
-    // 💊 CREAR ORDEN MÉDICA
+    // CREAR ORDEN MÉDICA
     public String createOrder(OrderMedicineEntity order, User veterinarian) throws Exception {
         if (!isVeterinarian(veterinarian)) {
-            throw new Exception("🔒 Solo un veterinario puede crear una orden médica.");
+            throw new BusinessException("🔒 Solo un veterinario puede crear una orden médica.");
         }
 
         petPort.FindByIdPet(order.getPetId())
-
-                .orElseThrow(() -> new Exception("🐾 Mascota no encontrada con ID: " + order.getPetId()));
+                .orElseThrow(() -> new NotFoundException("🐾 Mascota no encontrada con ID: " + order.getPetId()));
 
         order.setDniVeterinarian(veterinarian.getCedula());
         order.setDateGeneration(new Date(System.currentTimeMillis()));
         order.setCancelled(false);
 
-        // Convertimos a modelo sin ID manual
-        OrderMedicine domainOrder = new OrderMedicine();
+        MedicineOrder domainOrder = new MedicineOrder();
         domainOrder.setPetId(order.getPetId());
         domainOrder.setDniOwner(order.getDniOwner());
         domainOrder.setDniVeterinarian(order.getDniVeterinarian());
@@ -104,58 +100,72 @@ public class VeterinarianServices {
         domainOrder.setDateGeneration(order.getDateGeneration());
         domainOrder.setCancelled(order.isCancelled());
 
-        OrderMedicine savedOrder = medicineOrderPort.save(domainOrder);
+        MedicineOrder savedOrder = medicineOrderPort.save(domainOrder);
 
         return "✅ Orden médica creada con ID: " + savedOrder.getIdOrder();
     }
 
-    // ❌ ANULAR ORDEN MÉDICA
+    // ANULAR ORDEN MÉDICA
     public String cancelOrder(String orderId, User veterinarian) throws Exception {
         if (!isVeterinarian(veterinarian)) {
-            throw new Exception("🔒 Solo un veterinario puede anular una orden médica.");
+            throw new BusinessException("🔒 Solo un veterinario puede anular una orden médica.");
         }
 
-        Optional<OrderMedicine> optOrder = medicineOrderPort.findOrderById(orderId);
+        Optional<MedicineOrder> optOrder = medicineOrderPort.findOrderById(orderId);
 
         if (optOrder.isEmpty()) {
-            throw new Exception("⚠️ Orden médica no encontrada con ID: " + orderId);
+            throw new NotFoundException("⚠️ Orden médica no encontrada con ID: " + orderId);
         }
 
-        OrderMedicine order = optOrder.get();
+        MedicineOrder order = optOrder.get();
         if (order.isCancelled()) {
             return "⚠️ La orden ya está anulada.";
         }
 
         order.setCancelled(true);
-        medicineOrderPort.update(order); // Guardar la orden como anulada
+        medicineOrderPort.update(order);
 
         return "✅ Orden médica anulada correctamente.";
     }
-    // 📍 Consulta historia clínica por ID de mascota
+
+    // CONSULTAR HISTORIA CLÍNICA
     public List<ClinicalHistoryEntity> getHistoryByPetId(Long petId, long cedulaVeterinario) throws Exception {
-        // 1. Validar que quien consulta sea veterinario
         User vet = new User();
         vet.setCedula(cedulaVeterinario);
         vet.setRole("veterinario");
         validateRole(vet, "veterinario");
 
-        // 2. Verificar que la mascota existe
         petPort.FindByIdPet(petId)
-                .orElseThrow(() -> new Exception("🐾 Mascota no encontrada con ID: " + petId));
+                .orElseThrow(() -> new NotFoundException("🐾 Mascota no encontrada con ID: " + petId));
 
-        // 3. Buscar historias clínicas por ID de mascota
         return clinicalHistoryPort.findByPetId(petId);
     }
 
-    public List<OrderMedicine> getAllMedicalOrders(User user) throws Exception {
+    public List<MedicineOrder> getAllMedicalOrders(User user) throws Exception {
         if (!user.isVeterinarian() && !user.isSeller()) {
-            throw new Exception("❌ Solo veterinarios o vendedores pueden consultar órdenes médicas.");
+            throw new BusinessException("❌ Solo veterinarios o vendedores pueden consultar órdenes médicas.");
         }
         return medicineOrderPort.findAllOrders();
     }
 
-    // 🛡️ Validación de rol
     private boolean isVeterinarian(User user) {
         return user.getRole() != null && user.getRole().equalsIgnoreCase("veterinario");
+    }
+
+    public void updatePartialPet(long id, Map<String, Object> updates) throws Exception {
+        Pet pet = petPort.FindByIdPet(id)
+                .orElseThrow(() -> new NotFoundException("🐾 Mascota no encontrada con ID: " + id));
+
+        if (updates.containsKey("name")) {
+            pet.setName(updates.get("name").toString());
+        }
+        if (updates.containsKey("color")) {
+            pet.setColor(updates.get("color").toString());
+        }
+        if (updates.containsKey("weight")) {
+            pet.setWeight(Float.parseFloat(updates.get("weight").toString()));
+        }
+
+        petPort.SavePet(pet);
     }
 }

@@ -2,7 +2,7 @@ package app.adapters.MedicineOrder;
 
 import app.adapters.MedicineOrder.entity.OrderMedicineEntity;
 import app.adapters.MedicineOrder.repository.OrderMedicineRepository;
-import app.domain.models.OrderMedicine;
+import app.domain.models.MedicineOrder;
 import app.ports.MedicineOrderPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,36 +17,36 @@ public class OrderMedicineAdapter implements MedicineOrderPort {
     private OrderMedicineRepository repository;
 
     @Override
-    public OrderMedicine save(OrderMedicine order) {
+    public MedicineOrder save(MedicineOrder order) {
         OrderMedicineEntity entity = toEntity(order);
         OrderMedicineEntity saved = repository.save(entity);
         return toDomain(saved);
     }
 
     @Override
-    public List<OrderMedicine> findAllOrders() {
+    public List<MedicineOrder> findAllOrders() {
         return repository.findAll()
                 .stream().map(this::toDomain).toList();
     }
 
     @Override
-    public Optional<OrderMedicine> findOrderById(long idOrder) {
+    public Optional<MedicineOrder> findOrderById(long idOrder) {
         return repository.findById(idOrder).map(this::toDomain);
     }
 
     @Override
-    public OrderMedicine update(OrderMedicine order) {
+    public MedicineOrder update(MedicineOrder order) {
         return save(order);
     }
 
     @Override
-    public Optional<OrderMedicine> findOrderById(String idOrder) {
+    public Optional<MedicineOrder> findOrderById(String idOrder) {
         return repository.findById(Long.valueOf(idOrder)).map(this::toDomain);
     }
 
     // === Conversión ===
-    private OrderMedicine toDomain(OrderMedicineEntity entity) {
-        OrderMedicine domain = new OrderMedicine();
+    private MedicineOrder toDomain(OrderMedicineEntity entity) {
+        MedicineOrder domain = new MedicineOrder();
         domain.setIdOrder(entity.getOrderId());
         domain.setPetId(entity.getPetId());
         domain.setDniOwner(entity.getDniOwner());
@@ -58,7 +58,7 @@ public class OrderMedicineAdapter implements MedicineOrderPort {
         return domain;
     }
 
-    private OrderMedicineEntity toEntity(OrderMedicine domain) {
+    private OrderMedicineEntity toEntity(MedicineOrder domain) {
         OrderMedicineEntity entity = new OrderMedicineEntity();
 
         if (domain.getIdOrder() != null) {

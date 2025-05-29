@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Getter
 @Setter
-public class OrderMedicine {
+public class MedicineOrder {
 
     @Setter
     private Long idOrder;             // ID único (UUID)
